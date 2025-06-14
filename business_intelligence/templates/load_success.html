@@ -1,0 +1,12 @@
+<!-- my_app/templates/load_success.html -->
+<!DOCTYPE html>
+<html>
+<head><title>ETL Success</title></head>
+<body>
+    <h2>Data berhasil dimuat ke database!</h2>
+    <a href="{% url 'order_summary' %}">Lihat Ringkasan Order</a>
+    <div class="text-center mt-4">
+    <a href="{% url 'dashboard' %}" class="btn btn-secondary">← Kembali ke Dashboard</a>
+</div>
+</body>
+</html>
