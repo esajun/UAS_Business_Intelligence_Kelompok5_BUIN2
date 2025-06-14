@@ -71,16 +71,3 @@ Dataset yang digunakan diperoleh dari Kaggle:
   - MONTH, YEAR
 
 ---
-
-## 🌐 Dashboard Django
-Dashboard dibangun menggunakan Django dan Bootstrap 5. Fitur yang tersedia antara lain:
-1. **Penjualan Berdasarkan Produk**
-2. **Penjualan Berdasarkan Customer**
-3. **Penjualan Berdasarkan Lokasi**
-4. **Penjualan Berdasarkan Negara dan Waktu**
-5. **Prediksi Penjualan per Bulan**
-6. **Prediksi Penjualan per Produk**
-
-Visualisasi menggunakan **Chart.js** untuk tampilan grafik yang interaktif.
-
----
