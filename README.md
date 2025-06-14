@@ -1,4 +1,4 @@
-# Tugas 3: Data Warehouse Penjualan dengan Star Schema, ETL, dan Django Dashboard
+# Star Schema, ETL, dan Django Dashboard
 
 ## 📚 Sumber Dataset
 Dataset yang digunakan diperoleh dari Kaggle:
