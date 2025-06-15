@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Customer Segmentation</title>
+    <!-- Bootstrap & Font -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Poppins', sans-serif;
+        }
+        .card-custom {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+<div class="container my-5">
+
+    <h3 class="text-center mb-4"><i class="bi bi-graph-up-arrow text-primary me-2"></i>Customer Segmentation</h3>
+
+    <!-- Chart -->
+    <div class="card-custom mb-4">
+        <canvas id="segmentChart" height="300"></canvas>
+    </div>
+
+    <!-- Dropdown Filter -->
+    <div class="mb-3">
+        <label for="segmentFilter" class="form-label fw-semibold">Filter Segment:</label>
+        <select id="segmentFilter" class="form-select w-auto">
+            <option value="All">All</option>
+            <option value="Low Value">Low Value</option>
+            <option value="Medium Value">Medium Value</option>
+            <option value="High Value">High Value</option>
+        </select>
+    </div>
+
+    <!-- Tabel Customer -->
+    <div class="card-custom">
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover align-middle text-center" id="customerTable">
+                <thead class="table-light">
+                    <tr>
+                        <th>Nama Customer</th>
+                        <th>Segment</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cs in customer_segments %}
+                        <tr data-segment="{{ cs.segment_label }}">
+                            <td>{{ cs.customer__customer_name }}</td>
+                            <td>{{ cs.segment_label }}</td>
+                        </tr>
+                    {% empty %}
+                        <tr><td colspan="2">Data tidak ditemukan.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Back Button -->
+    <div class="text-center mt-4">
+        <a href="{% url 'dashboard' %}" class="btn btn-secondary">
+            <i class="bi bi-arrow-left-circle me-1"></i> Kembali ke Dashboard
+        </a>
+    </div>
+
+</div>
+
+<!-- Script Chart & Filter -->
+<script>
+    const labels = JSON.parse('{{ labels|escapejs }}');
+    const values = JSON.parse('{{ values|escapejs }}');
+
+    new Chart(document.getElementById('segmentChart'), {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Jumlah Customer per Segmen',
+                data: values,
+                backgroundColor: ['#90EE90', '#FFD700', '#FF7F7F']
+            }]
+        },
+        options: {
+            indexAxis: 'y',
+            responsive: true,
+            plugins: {
+                legend: { display: false },
+                title: { display: true, text: 'Distribusi Customer per Segment' }
+            },
+            scales: {
+                x: {
+                    beginAtZero: true,
+                    title: { display: true, text: 'Jumlah Customer' }
+                }
+            }
+        }
+    });
+
+    // Dropdown Filter
+    document.getElementById("segmentFilter").addEventListener("change", function () {
+        const selected = this.value;
+        const rows = document.querySelectorAll("#customerTable tbody tr");
+
+        rows.forEach(row => {
+            const seg = row.getAttribute("data-segment");
+            if (selected === "All" || seg === selected) {
+                row.style.display = "";
+            } else {
+                row.style.display = "none";
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
