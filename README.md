@@ -1,5 +1,8 @@
 # Star Schema, ETL, dan Django Dashboard
 
+**Universitas Negeri Surabaya (Unesa)**  
+**Program Studi Sistem Informasi, Fakultas Teknik**
+
 ## 📚 Sumber Dataset
 Dataset yang digunakan diperoleh dari Kaggle:
 
