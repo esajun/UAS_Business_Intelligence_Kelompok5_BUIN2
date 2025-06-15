@@ -1,0 +1,109 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Penjualan Produk per Bulan</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f9f9f9;
+            font-family: 'Poppins', sans-serif;
+        }
+        .card-custom {
+            background-color: #ffffff;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+            margin-top: 40px;
+        }
+        h3 {
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h3 class="text-center mt-5 mb-3">
+        <i class="bi bi-graph-up-arrow me-2 text-primary"></i>Penjualan Produk per Bulan
+    </h3>
+
+    <div class="card-custom">
+        <form method="get" class="mb-4">
+            <label for="productline" class="form-label fw-semibold">Pilih Product Line:</label>
+            <select class="form-select" name="productline" id="productline" onchange="this.form.submit()">
+                {% for line in productlines %}
+                    <option value="{{ line }}" {% if line == selected %}selected{% endif %}>{{ line }}</option>
+                {% endfor %}
+            </select>
+        </form>
+
+        <div class="chart-container" style="position: relative; height:400px;">
+            <canvas id="productSalesChart"></canvas>
+        </div>
+    </div>
+
+    <div class="text-center mt-4">
+        <a href="{% url 'dashboard' %}" class="btn btn-secondary">
+            <i class="bi bi-arrow-left-circle me-1"></i> Kembali ke Dashboard
+        </a>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const labels = {{ labels|safe }};
+    const values = {{ values|safe }};
+
+    const ctx = document.getElementById('productSalesChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Total Sales (USD)',
+                data: values,
+                borderColor: '#0d6efd',
+                backgroundColor: 'rgba(13, 110, 253, 0.2)',
+                tension: 0.4,
+                pointRadius: 4,
+                pointHoverRadius: 6
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top'
+                },
+                tooltip: {
+                    mode: 'index',
+                    intersect: false
+                }
+            },
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Bulan (YYYY-MM)',
+                        font: { weight: 'bold' }
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Total Sales',
+                        font: { weight: 'bold' }
+                    }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
