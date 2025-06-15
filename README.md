@@ -3,7 +3,7 @@
 ## 📚 Sumber Dataset
 Dataset yang digunakan diperoleh dari Kaggle:
 
-> 🚗 **[Automobile Sales | Visual EDA 📊](https://www.kaggle.com/datasets/deepla/automobile-sales)**  
+> 🚗 **[Automobile Sales | Visual EDA 📊](https://www.kaggle.com/code/ddosad/automobile-sales-visual-eda/)**  
 > oleh **dee dee**, dipublikasikan sekitar 1 tahun yang lalu dengan lebih dari **19.000 views** dan **500+ salinan**.
 
 ## 📦 Struktur Star Schema
